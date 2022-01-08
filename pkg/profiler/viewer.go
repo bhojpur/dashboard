@@ -44,10 +44,10 @@ $(function () { setInterval({{ .ViewID }}_sync, {{ .Interval }}); });
 function {{ .ViewID }}_sync() {
     $.ajax({
         type: "GET",
-        url: "http://{{ .Addr }}/debug/statsview/view/{{ .Route }}",
+        url: "http://{{ .Addr }}/profiler/view/{{ .Route }}",
         dataType: "json",
         success: function (result) {
-            let opt = goecharts_{{ .ViewID }}.getOption();
+            let opt = bhojpurcharts_{{ .ViewID }}.getOption();
 
             let x = opt.xAxis[0].data;
             x.push(result.time);
@@ -64,7 +64,7 @@ function {{ .ViewID }}_sync() {
                 }
                 opt.series[i].data = y;
 
-                goecharts_{{ .ViewID }}.setOption(opt);
+                bhojpurcharts_{{ .ViewID }}.setOption(opt);
             }
         }
     });
@@ -232,7 +232,7 @@ func genViewTemplate(vid, route string) string {
 
 	buf := bytes.Buffer{}
 	if err := tpl.Execute(&buf, c); err != nil {
-		panic("statsview: failed to execute template " + err.Error())
+		panic("StatsView: failed to execute template " + err.Error())
 	}
 
 	return buf.String()
