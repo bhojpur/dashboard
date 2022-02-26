@@ -14,3 +14,15 @@
 # IDE
 .idea/
 .vscode/
+
+# Auto generated after a successful npm install
+pkg/webui/src/environments/version.ts
+
+release/
+node_modules/
+pkg/webui/npm-debug.log
+dist/
+release/
+.vscode/**/*
+__debug_bin
+.venv/**

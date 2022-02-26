@@ -1,0 +1,12 @@
+@use '../../theme/pages.scss';
+@use '../../theme/tables.scss';
+
+.component-img {
+    height: 60%;
+    width: auto;
+    margin: auto;
+}
+
+a:hover {
+    text-decoration: underline;
+}

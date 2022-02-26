@@ -1,0 +1,35 @@
+@use '../../theme/pages.scss';
+@use '../../theme/tables.scss';
+@use '../../theme/cards.scss';
+
+.delete:hover {
+    cursor: pointer;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.delete {
+    color: #888888;
+}
+
+.green {
+    color: green;
+}
+
+.red {
+    color: red;
+}
+
+#actions {
+    position: relative;
+    height: 36px;
+}
+
+#controlPlaneLink {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}

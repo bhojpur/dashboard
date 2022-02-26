@@ -1,0 +1,70 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: dashboard-reader
+rules:
+  - apiGroups: ["", "bhojpur.net", "apps", "extensions"]
+    resources:
+      [
+        "deployments",
+        "pods",
+        "pods/log",
+        "components",
+        "configurations",
+        "namespaces",
+      ]
+    verbs: ["get", "list"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: dashboard-reader-global
+subjects:
+  - kind: ServiceAccount
+    name: dashboard-reader
+    namespace: app-system
+roleRef:
+  kind: ClusterRole
+  name: dashboard-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: app-dashboard
+spec:
+  selector:
+    app: app-dashboard
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: dashboard-reader
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-dashboard
+  labels:
+    app: app-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-dashboard
+  template:
+    metadata:
+      labels:
+        app: app-dashboard
+    spec:
+      serviceAccountName: dashboard-reader
+      containers:
+        - name: app-dashboard
+          image: docker.io/bhojpur/dashboard:0.0.2
+          ports:
+            - containerPort: 8080
+          imagePullPolicy: Always

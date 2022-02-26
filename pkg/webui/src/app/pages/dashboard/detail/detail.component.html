@@ -1,0 +1,124 @@
+<h2 class="page-header-left" *ngIf="loadedInstance">Application: {{ instance.appID }}</h2>
+<mat-tab-group>
+  <mat-tab label="Summary">
+    <mat-card class="card-large mat-elevation-z8" *ngIf="loadedInstance">
+      <mat-card-header>
+        <mat-card-title>Summary</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table>
+          <tbody>
+            <tr>
+              <td class="table-label">App ID</td>
+              <td class="table-data">{{ instance.appID }}</td>
+            </tr>
+            <tr>
+              <td class="table-label">App Port</td>
+              <td class="table-data">{{ instance.appPort }}</td>
+            </tr>
+            <tr>
+              <td class="table-label">App HTTP Port</td>
+              <td class="table-data">{{ instance.httpPort }}</td>
+            </tr>
+            <tr>
+              <td class="table-label">App gRPC Port</td>
+              <td class="table-data">{{ instance.grpcPort }}</td>
+            </tr>
+            <tr *ngIf="metadata && metadata.extended && metadata.extended['appCommand']; else noMetadataCommand">
+              <td class="table-label">Command</td>
+              <td class="table-data">{{ metadata.extended['appCommand'] }}</td>
+            </tr>
+            <ng-template #noMetadataCommand>
+              <tr *ngIf="instance.command">
+                <td class="table-label">Command</td>
+                <td class="table-data">{{ instance.command }}</td>
+              </tr>
+            </ng-template>
+            <tr>
+              <td class="table-label">Replicas</td>
+              <td class="table-data">{{ instance.replicas }}</td>
+            </tr>
+            <tr>
+              <td class="table-label">Address</td>
+              <td class="table-data">{{ instance.address }}</td>
+            </tr>
+            <tr *ngIf="platform === 'standalone'">
+              <td class="table-label">PID</td>
+              <td class="table-data">{{ instance.pid }}</td>
+            </tr>
+            <tr>
+              <td class="table-label">Created</td>
+              <td class="table-data">{{ instance.created }}</td>
+            </tr>
+            <tr>
+              <td class="table-label">Age</td>
+              <td class="table-data">{{ instance.age }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab *ngIf="platform === 'kubernetes'" label="Metadata">
+    <mat-card class="card-large mat-elevation-z8" *ngIf="loadedConfiguration">
+      <mat-card-header>
+        <mat-card-title>Metadata</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table>
+          <tbody>
+            <tr>
+              <td class="table-label">Labels</td>
+              <td class="table-data">app:{{ modelYAML.metadata.labels["app"] }}</td>
+            </tr>
+            <tr>
+              <td class="table-label">Created</td>
+              <td class="table-data">{{ modelYAML.metadata.creationTimestamp }}</td>
+            </tr>
+            <tr>
+              <td class="table-label">Annotations</td>
+              <td>
+                <table>
+                  <tbody>
+                    <tr *ngFor="let annotation of annotations">
+                      <td class="dark table-sublabel">{{ annotation }}</td>
+                      <td class="table-data">{{ modelYAML.metadata.annotations[annotation] }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab *ngIf="platform === 'kubernetes'" label="Configuration">
+    <mat-card class="card-large mat-elevation-z8" [ngStyle]="{ 'background-color': isDarkTheme() ? '#1e1e1e' : '' }">
+      <app-editor [(model)]="model"></app-editor>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Actors">
+    <mat-card class="card-large mat-elevation-z8">
+      <mat-card-header>
+        <mat-card-title>Actors</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <table *ngIf="metadata && metadata.actors.length > 0; else noActors">
+          <tbody>
+            <tr *ngFor="let item of metadata.actors">
+              <td class="table-label">{{ item.type }}</td>
+              <td class="table-data">{{ item.count }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <ng-template #noActors>
+          <p class="page-text">No registered Bhojpur Application Actors</p>
+        </ng-template>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab *ngIf="platform === 'kubernetes'" label="Logs">
+    <app-logs></app-logs>
+  </mat-tab>
+</mat-tab-group>

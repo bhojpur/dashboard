@@ -1,0 +1,45 @@
+<mat-card class="card-large mat-elevation-z8">
+    <mat-card-header>
+      <mat-card-title>
+        Logs
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-form-field class="containerFormField">
+        <mat-select [(ngModel)]="containerValue" name="contain" placeholder="Container">
+          <mat-option *ngFor="let contain of containers" [value]="contain">
+            {{ contain }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="filterFormField">
+        <mat-label>Keyword</mat-label>
+        <input matInput type="text" [(ngModel)]=filterValue>
+        <button mat-button *ngIf="filterValue" matSuffix mat-icon-button aria-label="Clear" (click)="filterValue=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+      <mat-form-field class="timeSinceForm">
+        <mat-label>Logs Since</mat-label>
+        <input matInput placeholder="Length" [(ngModel)]="since" class="sinceInput">
+        <mat-select [(ngModel)]="sinceUnit" class="sinceUnitSelect" placeholder="Unit">
+          <mat-option value=""></mat-option>
+          <mat-option value="seconds">seconds</mat-option>
+          <mat-option value="minutes">minutes</mat-option>
+          <mat-option value="hours">hours</mat-option>
+          <mat-option value="days">days</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br>
+      <div *ngFor="let container of containers">
+          <div class="logList" *ngIf="container == containerValue" >
+            <ul *ngIf="logs.get(container); let containerLogs">
+              <li *ngFor="let log of containerLogs | timeSince : since : sinceUnit | filter : filterValue : false">
+                <span class="logTimestamp" [innerHTML]="log.timestamp | isoDate"></span>&nbsp;
+                <span [ngClass]="{logWarn: log.level == 'warn', logError: log.level == 'error'}" [innerHTML]="log.content | highlight : filterValue"></span>
+              </li>
+            </ul>
+          </div>
+      </div>
+    </mat-card-content>
+  </mat-card>

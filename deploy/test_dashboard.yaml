@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-dashboard
+  labels:
+    app: app-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-dashboard
+  template:
+    metadata:
+      labels:
+        app: app-dashboard
+    spec:
+      containers:
+      - name: app-dashboard
+        image: <username>/dashboard:<tag>
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: Always

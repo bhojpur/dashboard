@@ -1,0 +1,65 @@
+<h2 class="page-header">Overview</h2>
+<ng-container *ngIf="platform === 'kubernetes'">
+  <h3 class="card-header">Application Control Plane</h3>
+  <mat-card class="card-tiny mat-elevation-z8">
+    <mat-card-content>
+      <table>
+        <tbody>
+          <tr>
+            <td class="table-label-large">Version</td>
+            <td class="table-data-large">{{ appVersion }}</td>
+          </tr>
+          <tr>
+            <td class="table-label-large">Status</td>
+            <td class="table-data-large">
+              {{ appHealthiness }}
+            </td>
+            <td>
+              <mat-icon
+                *ngIf="controlPlaneLoaded"
+                [ngClass]="{
+                  'green': appHealthiness === 'Healthy',
+                  'red': appHealthiness !== 'Healthy'
+                }">{{ (appHealthiness === 'Healthy') ? 'check' : 'priority_high' }}
+              </mat-icon>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </mat-card-content>
+    <mat-card-actions id="actions">
+      <button mat-raised-button routerLink="/controlplane" id="controlPlaneLink">More Information</button>
+    </mat-card-actions>
+  </mat-card>
+</ng-container>
+<h3 class="table-header">Bhojpur Applications</h3>
+<table *ngIf="tableLoaded" mat-table [dataSource]="instances" class="table-large mat-elevation-z8">
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let item"><a routerLink="/overview/{{item.appID}}">{{ item.appID }}</a></td>
+  </ng-container>
+  <ng-container matColumnDef="labels">
+    <th mat-header-cell *matHeaderCellDef>Labels</th>
+    <td mat-cell *matCellDef="let item">{{ item.labels }}</td>
+  </ng-container>
+  <ng-container matColumnDef="status">
+    <th mat-header-cell *matHeaderCellDef>Status</th>
+    <td mat-cell *matCellDef="let item">{{ item.status }}</td>
+  </ng-container>
+  <ng-container matColumnDef="age">
+    <th mat-header-cell *matHeaderCellDef>Age</th>
+    <td mat-cell *matCellDef="let item">{{ item.age }}</td>
+  </ng-container>
+  <ng-container matColumnDef="selector">
+    <th mat-header-cell *matHeaderCellDef>Selector</th>
+    <td mat-cell *matCellDef="let item">{{ item.selector }}</td>
+  </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell *matHeaderCellDef>Actions</th>    
+    <td mat-cell *matCellDef="let item">
+      <button mat-raised-button (click)="stop(item.appID)">Stop</button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

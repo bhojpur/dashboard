@@ -1,0 +1,12 @@
+@use '~@angular/material' as mat;
+
+@mixin pages-component-theme($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+      
+    .active {
+        mat-icon {
+            color: mat.get-color-from-palette($primary);
+        }
+    }
+}
