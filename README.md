@@ -1,6 +1,6 @@
 # Bhojpur Dashboard - Data Visualization
 
-The Bhojpur Dashboard is a high-performance dashboard engine applied within the
+The `Bhojpur Dashboard` is a high-performance dashboard engine applied within the
 [Bhojpur.NET Platform](https://github.com/bhojpur/platform) for delivery of web-scale
 distributed applications or services. It is a web-based user interface for
 [Bhojpur Application](https://github.com/bhojpur/application), allowing users to see
@@ -18,10 +18,23 @@ logs, and more on both Kubernetes and self-hosted platforms.
 
 ### Prerequisites
 
-[Bhojpur Application](https://github.com/bhojpur/application) Runtime
+You need the following to be able to run the dashboard
+- [Bhojpur Application](https://github.com/bhojpur/application) Runtime
+- [Bhojpur Application](https://github.com/bhojpur/application) CLI
 
-[Bhojpur Application](https://github.com/bhojpur/application) CLI
+### User Interface Build
 
+For compiling the web-based user interface developed using `Angular Frameework`, you must
+have `node.js`, `angular.io`, etc installed. Then, type the following commands
+
+```bash
+$ cd pkg/webui
+$ npm install
+$ ng build
+$ ng serve
+```
+
+Alternativerly, you can run `./build_standalone.sh` or `./build_kubernetes.sh` script.
 ### Installation
 
 The [Bhojpur Dashboard](https://github.com/bhojpur/dashboard) comes pre-packaged with the
