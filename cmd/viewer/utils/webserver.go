@@ -1,4 +1,4 @@
-package cmd
+package utils
 
 // Copyright (c) 2018 Bhojpur Consulting Private Limited, India. All rights reserved.
 
@@ -119,7 +119,7 @@ func RunWebServer(port int) {
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
-	fmt.Printf("Bhojpur Dashboard running on http://localhost:%v\n", port)
+	fmt.Printf("Bhojpur Dashboard server running on http://localhost:%v\n", port)
 	log.Fatal(srv.ListenAndServe())
 }
 
@@ -372,7 +372,7 @@ func getVersionHandler(w http.ResponseWriter, r *http.Request) {
 
 func generateIndexFile(w http.ResponseWriter, r *http.Request, baseHref string) {
 	path, _ := os.Getwd()
-	buf, err := ioutil.ReadFile(filepath.Join(path, "/web/dist/index.html"))
+	buf, err := ioutil.ReadFile(filepath.Join(path, "/pkg/webui/dist/index.html"))
 	if err != nil {
 		respondWithError(w, 500, err.Error())
 		return

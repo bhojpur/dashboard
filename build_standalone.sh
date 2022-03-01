@@ -28,14 +28,14 @@ do
   platform_release_dir=${release_dir}/${platform}
 
   echo preparing release dir ${platform_release_dir}
-  mkdir -p ${platform_release_dir}/web/
-  cp -r ./webui/dist ${platform_release_dir}/web/
+  mkdir -p ${platform_release_dir}/webui/
+  cp -r ./pkg/webui/dist ${platform_release_dir}/webui/
   cp ./$go_executable_output_file ${platform_release_dir}
 
   rm -rf $HOME/.bhojpur/bin/web
   rm $HOME/.bhojpur/bin/dashboard.exe
 
-  cp -r ${platform_release_dir}/web $HOME/.bhojpur/bin/web
+  cp -r ${platform_release_dir}/webui $HOME/.bhojpur/bin/web
   mv ./$go_executable_output_file $HOME/.bhojpur/bin/
 done
 

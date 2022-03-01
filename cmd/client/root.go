@@ -61,8 +61,8 @@ var rootCmdOpts struct {
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "dashboard",
-	Short: "Bhojpur Dashboard is a data visualization engine powered by Kubernetes",
+	Use:   "dashctl",
+	Short: "Bhojpur Dashboard Control is a client-side engine for data visualization services",
 	PersistentPreRun: func(cmd *cobra.Command, args []string) {
 		if verbose {
 			log.SetLevel(log.DebugLevel)

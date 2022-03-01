@@ -113,8 +113,8 @@ $(5)/$(1):
 	CGO_ENABLED=$(CGO) GOOS=$(3) GOARCH=$(4) go build $(GCFLAGS) -ldflags=$(LDFLAGS) \
 	-o $(5)/$(1) \
 	./main.go;
-	mkdir -p $(5)/web/dist
-	cd web && npm i && ng build --outputPath=../$(5)/web/dist
+	mkdir -p $(5)/webui/dist
+	cd webui && npm i && ng build --outputPath=../$(5)/webui/dist
 endef
 
 # Generate binary targets

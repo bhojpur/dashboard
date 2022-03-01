@@ -26,8 +26,8 @@ env CGO_ENABLED=0 GOOS=$GOOS GOARCH=$GOARCH go build -a -o $go_executable_output
 platform_release_dir=${release_dir}/${platform}
 
 echo preparing release dir ${platform_release_dir}
-mkdir -p ${platform_release_dir}/web/
-cp -r ./web/dist ${platform_release_dir}/web/
+mkdir -p ${platform_release_dir}/webui/
+cp -r ./pkg/webui/dist ${platform_release_dir}/webui/
 mv ./$go_executable_output_file ${platform_release_dir}
 
 docker build -t ${image} .

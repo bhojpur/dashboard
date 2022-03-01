@@ -1,4 +1,4 @@
-package cmd
+package utils
 
 // Copyright (c) 2018 Bhojpur Consulting Private Limited, India. All rights reserved.
 
@@ -31,7 +31,7 @@ import (
 // RunDashboard runs the dashboard with the supplied flags
 func RunDashboard() {
 	dashboardVersion := flag.Bool("version", false, "Prints the dashboard version")
-	port := flag.Int("port", 8080, "Port to listen to")
+	port := flag.Int("port", 4200, "Port to listen to")
 
 	flag.Parse()
 
