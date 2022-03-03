@@ -1,9 +1,9 @@
 {
     "name": "app-dashboard",
-    "version": "0.0.2",
+    "version": "0.0.4",
     "main": "main.js",
     "license": "MIT",
-    "description": "A dashboard for all Bhojpur Application related needs.",
+    "description": "A system administrator's dashboard for all Bhojpur Application related needs.",
     "repository": "https://github.com/bhojpur/dashboard",
     "scripts": {
       "ng": "ng",

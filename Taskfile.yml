@@ -12,7 +12,7 @@ tasks:
     build-tools:
         desc: Build the software tools for build, release of Bhojpur GUI applications
         cmds:
-        - GOFLAGS=-mod=mod go build -o bin/dashboard cmd/viewer/main.go 
+        - GOFLAGS=-mod=mod go build -o bin/dashboard cmd/areview/main.go 
         - chmod 755 ./bin/dashboard
         - cp ./bin/dashboard $GOPATH/bin
         - cp ./bin/dashboard ~/.bhojpur/bin

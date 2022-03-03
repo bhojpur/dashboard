@@ -1,4 +1,4 @@
-package main
+package utils
 
 // Copyright (c) 2018 Bhojpur Consulting Private Limited, India. All rights reserved.
 
@@ -21,9 +21,24 @@ package main
 // THE SOFTWARE.
 
 import (
-	"github.com/bhojpur/dashboard/cmd/viewer/utils"
+	"flag"
+	"fmt"
+	"os"
+
+	"github.com/bhojpur/dashboard/pkg/version"
 )
 
-func main() {
-	utils.RunDashboard()
+// RunDashboard runs the Bhojpur Application dashboard with the supplied flags
+func RunDashboard() {
+	dashboardVersion := flag.Bool("version", false, "Prints the Bhojpur Application dashboard version")
+	port := flag.Int("port", 4200, "Port to listen to")
+
+	flag.Parse()
+
+	if *dashboardVersion {
+		fmt.Println(version.GetVersion())
+		os.Exit(0)
+	} else {
+		RunWebServer(*port)
+	}
 }

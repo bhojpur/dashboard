@@ -3,7 +3,7 @@ module github.com/bhojpur/dashboard
 go 1.17
 
 require (
-	github.com/bhojpur/application v0.0.6
+	github.com/bhojpur/application v0.0.7
 	github.com/bhojpur/charts v0.0.6
 	github.com/lib/pq v1.10.4
 	github.com/rs/cors v1.8.2

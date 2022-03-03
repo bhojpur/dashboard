@@ -1,4 +1,4 @@
-package utils
+package main
 
 // Copyright (c) 2018 Bhojpur Consulting Private Limited, India. All rights reserved.
 
@@ -21,24 +21,9 @@ package utils
 // THE SOFTWARE.
 
 import (
-	"flag"
-	"fmt"
-	"os"
-
-	"github.com/bhojpur/dashboard/pkg/version"
+	"github.com/bhojpur/dashboard/cmd/areview/utils"
 )
 
-// RunDashboard runs the dashboard with the supplied flags
-func RunDashboard() {
-	dashboardVersion := flag.Bool("version", false, "Prints the dashboard version")
-	port := flag.Int("port", 4200, "Port to listen to")
-
-	flag.Parse()
-
-	if *dashboardVersion {
-		fmt.Println(version.GetVersion())
-		os.Exit(0)
-	} else {
-		RunWebServer(*port)
-	}
+func main() {
+	utils.RunDashboard()
 }

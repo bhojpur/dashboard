@@ -37,8 +37,8 @@ spec:
     app: app-dashboard
   ports:
     - protocol: TCP
-      port: 8080
-      targetPort: 8080
+      port: 8000
+      targetPort: 8000
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -64,7 +64,7 @@ spec:
       serviceAccountName: dashboard-reader
       containers:
         - name: app-dashboard
-          image: docker.io/bhojpur/dashboard:0.0.2
+          image: docker.io/bhojpur/dashboard:0.0.4
           ports:
-            - containerPort: 8080
+            - containerPort: 8000
           imagePullPolicy: Always

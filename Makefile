@@ -53,7 +53,7 @@ else
 endif
 export GOOS ?= $(TARGET_OS_LOCAL)
 
-# Default docker container and E2E test targst.
+# Default docker container and E2E test target.
 TARGET_OS ?= linux
 TARGET_ARCH ?= amd64
 
@@ -67,7 +67,7 @@ endif
 
 export BINARY_EXT ?= $(BINARY_EXT_LOCAL)
 
-OUT_DIR := ./release
+OUT_DIR := ./dist/release
 
 ################################################################################
 # Go build details                                                             #
@@ -77,13 +77,13 @@ BASE_PACKAGE_NAME := github.com/bhojpur/dashboard
 DEFAULT_LDFLAGS:=-X $(BASE_PACKAGE_NAME)/pkg/version.commit=$(GIT_VERSION) -X $(BASE_PACKAGE_NAME)/pkg/version.version=$(APP_VERSION)
 
 ifeq ($(origin DEBUG), undefined)
-  OUT_DIR:=release
+  OUT_DIR:=./dist/release
   LDFLAGS:="$(DEFAULT_LDFLAGS) -s -w"
 else ifeq ($(DEBUG),0)
   OUT_DIR:=release
   LDFLAGS:="$(DEFAULT_LDFLAGS) -s -w"
 else
-  OUT_DIR:=debug
+  OUT_DIR:=./dist/debug
   GCFLAGS:=-gcflags="all=-N -l"
   LDFLAGS:="$(DEFAULT_LDFLAGS)"
   $(info Build with debugger information)
@@ -112,9 +112,9 @@ define genBinariesForTarget
 $(5)/$(1):
 	CGO_ENABLED=$(CGO) GOOS=$(3) GOARCH=$(4) go build $(GCFLAGS) -ldflags=$(LDFLAGS) \
 	-o $(5)/$(1) \
-	./main.go;
-	mkdir -p $(5)/webui/dist
-	cd webui && npm i && ng build --outputPath=../$(5)/webui/dist
+	./cmd/areview/main.go;
+	mkdir -p $(5)/webui
+	cd pkg/webui && npm i && ng build --outputPath=../../$(5)/webui
 endef
 
 # Generate binary targets

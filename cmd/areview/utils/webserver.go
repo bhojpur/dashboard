@@ -75,8 +75,8 @@ var inst instances.Instances
 var comps components.Components
 var configs configurations.Configurations
 
-// RunWebServer starts the web server that serves the Bhojpur Application
-// dashboard user interface and the APIs
+// RunWebServer starts the web server that serves the Bhojpur Application dashboard
+// user interface and the Bhojpur Application dashboard APIs
 func RunWebServer(port int) {
 	platform := ""
 	kubeClient, appClient, _ := kube.Clients()
@@ -110,7 +110,7 @@ func RunWebServer(port int) {
 	api.HandleFunc("/features", getFeaturesHandler).Methods("GET")
 	api.HandleFunc("/version", getVersionHandler).Methods("GET")
 
-	spa := spaHandler{staticPath: "pkg/webui/dist", indexPath: "index.html"}
+	spa := spaHandler{staticPath: "web/dist", indexPath: "index.html"}
 	r.PathPrefix("/").Handler(spa)
 
 	srv := &http.Server{
@@ -119,7 +119,7 @@ func RunWebServer(port int) {
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
-	fmt.Printf("Bhojpur Dashboard server running on http://localhost:%v\n", port)
+	fmt.Printf("Bhojpur Application - Dashboard Service running on http://localhost:%v\n", port)
 	log.Fatal(srv.ListenAndServe())
 }
 
@@ -372,7 +372,7 @@ func getVersionHandler(w http.ResponseWriter, r *http.Request) {
 
 func generateIndexFile(w http.ResponseWriter, r *http.Request, baseHref string) {
 	path, _ := os.Getwd()
-	buf, err := ioutil.ReadFile(filepath.Join(path, "/pkg/webui/dist/index.html"))
+	buf, err := ioutil.ReadFile(filepath.Join(path, "/index.html"))
 	if err != nil {
 		respondWithError(w, 500, err.Error())
 		return

@@ -14,7 +14,7 @@ ifeq ($(TARGET_OS), windows)
 endif
 
 # Supported docker image architecture
-DOCKERMUTI_ARCH=linux-amd64 linux-arm linux-arm64 windows-amd64
+DOCKERMULTI_ARCH=linux-amd64 linux-arm linux-arm64 windows-amd64
 
 ################################################################################
 # Target: docker-build, docker-push                                            #
@@ -64,11 +64,11 @@ docker-push: docker-build
 	$(info Pushing $(APP_RUNTIME_DOCKER_IMAGE_TAG) docker image ...)
 	$(DOCKER) push $(APP_RUNTIME_DOCKER_IMAGE_TAG)-$(TARGET_OS)-$(TARGET_ARCH)
 
-# publish muti-arch docker image to the registry
+# publish multi-arch docker image to the registry
 docker-manifest-create: check-docker-env
-	$(DOCKER) manifest create $(APP_RUNTIME_DOCKER_IMAGE_TAG) $(DOCKERMUTI_ARCH:%=$(APP_RUNTIME_DOCKER_IMAGE_TAG)-%)
+	$(DOCKER) manifest create $(APP_RUNTIME_DOCKER_IMAGE_TAG) $(DOCKERMULTI_ARCH:%=$(APP_RUNTIME_DOCKER_IMAGE_TAG)-%)
 ifeq ($(LATEST_RELEASE),true)
-	$(DOCKER) manifest create $(APP_RUNTIME_DOCKER_IMAGE_LATEST_TAG) $(DOCKERMUTI_ARCH:%=$(APP_RUNTIME_DOCKER_IMAGE_TAG)-%)
+	$(DOCKER) manifest create $(APP_RUNTIME_DOCKER_IMAGE_LATEST_TAG) $(DOCKERMULTI_ARCH:%=$(APP_RUNTIME_DOCKER_IMAGE_TAG)-%)
 endif
 
 docker-publish: docker-manifest-create
